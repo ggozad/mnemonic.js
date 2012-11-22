@@ -1,16 +1,16 @@
 # mnemonic.js
 
-`mnemonic.js` creates arbitrary strength radom pass-phrases or hexadecimal uids which you *can* actually remember.
+`mnemonic.js` creates arbitrary strength radom pass-phrases (or hexadecimal uids) which you *can* actually remember.
 
 ## Huh? My passwords are fine.
 
-Probably not. You are passwords are either not random, or they are not long enough. Ok, maybe you are one of those people who **really** have a strong memory, but most of are not.
+Probably not. Your passwords are either not random, or they are not long enough. Or, maybe you are one of those people who **really** have a strong memory, but most of us do not.
 
-Strong, secure passwords need to have an entropy of at least ~80 bits. Here are some common cases to what that corresponds in real life:
+Strong, secure passwords need to have an entropy of at least ~80 bits. Here are some real life considerations:
 
- * If we consider trully random passwords of the entire ASCII printable set, we get an entropy of about 6.5 bits/character. That means, you need about 12 randomly chosen characters among the entire set to be ok. Not easy.
+ * If we take trully random passwords from the entire ASCII printable set, we get an entropy of about 6.5 bits/character. That means, you need about 12 randomly chosen characters among the entire set to be ok. Not easy.
 
- * When you use non-random passwords your entropy/character reduces dramatically. For english, it's about 2 bits/character. You need a lot of characters to get there! And no, adding 1 at the end or using *1337* speak does not help much.
+ * When you use non-random passwords your entropy/character reduces dramatically. For english, it's about 2 bits/character. You need a lot of characters to get there! And no, adding 1 at the end or using *1337* speak does not help much, dictionary attacks have been countering these techniques for a while now.
 
 ## I am sold. How does this work?
 
@@ -36,7 +36,7 @@ In code, to generate a 96-bit password, i.e. 9 words generated from 3 random 32-
 
 ```
 
-If you wanna see the random sequence, or the the 96-bit number in hexadecimal,
+If you wanna see the random sequence, or the the 96-bit number in hexadecimal notation (useful if you need a uid that you can actually remember),
 
 ```javascript
 
@@ -50,5 +50,5 @@ If you wanna see the random sequence, or the the 96-bit number in hexadecimal,
 
 ## AMD loading
 
-under18n will register as an anonymous module if you use [requireJS](http://requirejs.org/).
+`mnemonic.js` will register as an anonymous module if you use [requireJS](http://requirejs.org/).
 
