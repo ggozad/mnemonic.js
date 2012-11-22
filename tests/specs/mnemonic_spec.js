@@ -45,6 +45,12 @@
             expect(m.toHex()).toEqual('ffffffff');
         });
 
+        it('can be reconstructed from words', function () {
+            var words, m2, m1 = new Mnemonic();
+            words = m1.toWords();
+            m2 = new Mnemonic(words);
+            expect(m1.toHex()).toEqual(m2.toHex());
+        });
     });
 
 
