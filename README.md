@@ -58,6 +58,24 @@ If you wanna see the random sequence, or the the 96-bit number in hexadecimal no
 
 ```
 
+## FAQ
+
+ * *Which browsers are supported?*
+
+    At the moment only those which support the [crypto API](https://developer.mozilla.org/en-US/docs/DOM/window.crypto.getRandomValues), used for the random number generation. As of today (22/11/2012) those are Chrome and Safari, but Firefox is almost there. In the future I might include a good PRNG for the browsers that do not support `crypto`.
+
+ * *Why n=1626?*
+
+    Because `n^3 = 4298942376` which is just over `2^32 = 4294967296` which makes the math work while keeping everything in nice multiples of 32 bits.
+
+ * *How does this compare to [diceware](http://world.std.com/~reinhold/diceware.html)?*
+
+    Diceware is very similal and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for mnemonic) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;)
+
+ * *Can I do this in my language?*
+
+    Of course you can! If you happen to make a list of 1626 memorable words in your own language I promise to include it.
+
 ## AMD loading
 
 `mnemonic.js` will register as an anonymous module if you use [requireJS](http://requirejs.org/).
@@ -65,3 +83,7 @@ If you wanna see the random sequence, or the the 96-bit number in hexadecimal no
 ## Credits
 
 The idea behind `mnemonic.js` was blatantly stolen from the excellent [electrum](http://electrum.ecdsa.org/) bitcoin client.
+
+## License
+
+`mnemonic.js` is Copyright (C) Yiorgis Gozadinos, Crypho AS. It is open-source and distributed under the MIT License.
