@@ -32,7 +32,7 @@ As mentioned, you can also do the inverse, i.e. from the list of words calculate
     w~i,1~ = dict.indexOf(word~i,1~)
     w~i,2~ = dict.indexOf(word~i,2~) mod n
     w~i,3~ = dict.indexOf(word~i,3~) mod n
-    x = w~i,1~ + n((w~i,2~ - w~i,1~) mod n) + n^2 ((w~i,3~ -w~i,2~) mod n)
+    x = w~i,1~ + n((w~i,2~ - w~i,1~) mod n) + n^2 ((w~i,3~ - w~i,2~) mod n)
 
 ## How do I use it?
 
@@ -58,8 +58,10 @@ If you wanna see the random sequence, or the the 96-bit number in hexadecimal no
 
 ```
 
-
 ## AMD loading
 
 `mnemonic.js` will register as an anonymous module if you use [requireJS](http://requirejs.org/).
 
+## Credits
+
+The idea behind `mnemonic.js` was blatantly stolen from the excellent [electrum](http://electrum.ecdsa.org/) bitcoin client.
