@@ -58,6 +58,16 @@ You can also obtain the random sequence, or the the 96-bit number in hexadecimal
 
 ```
 
+Finally, from a list of words it is possible to recreate the `Mnemonic` that generated them:
+
+```javascript
+
+    m = new Mnemonic(["grey", "climb", "demon", "snap", "shove", "fruit", "grasp", "hum", "self"]);
+    m.toHex();
+    "0a6deb990a3db22d6ed3010b"
+
+```
+
 ## FAQ
 
  * *Which browsers are supported?*
