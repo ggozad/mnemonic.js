@@ -1,33 +1,33 @@
 # mnemonic.js
 
-`mnemonic.js` creates arbitrary strength radom pass-phrases (or hexadecimal uids) which you *can* actually remember.
+`mnemonic.js` creates random passphrases (or hexadecimal uids) of specified strength which you *can* actually remember.
 
 ## Huh? My passwords are fine.
 
-Probably not. Your passwords are either not random, or they are not long enough. Or, maybe you are one of those people who **really** have a strong memory, but most of us do not.
+Probably not. Your passwords are either not random, or they are not long enough. Or, maybe you are one of those people who **really** do have a strong memory, but most of us do not.
 
 Strong, secure passwords need to have an entropy of at least ~80 bits. Here are some real life considerations:
 
- * If we take trully random passwords from the entire ASCII printable set, we get an entropy of about 6.5 bits/character. That means, you need about 12 randomly chosen characters among the entire set to be ok. Not easy.
+ * If we take truly random passwords from the entire ASCII printable set, we get an entropy of about 6.5 bits/character. That means, you need about 12 randomly chosen characters among the entire set to be ok. Not easy.
 
- * When you use non-random passwords your entropy/character reduces dramatically. For english, it's about 2 bits/character. You need a lot of characters to get there! And no, adding 1 at the end or using *1337* speak does not help much, dictionary attacks have been countering these techniques for a while now.
+ * When you use non-random passwords your entropy/character reduces dramatically. For English, it's about 2 bits/character. You need a lot of characters to get there! And no, adding 1 at the end or using *1337* speak does not help much, dictionary attacks have been countering these techniques for a while now.
 
 
 ## I am sold. How does this work?
 
-`mnemonic.js` uses a relatively small (1626 to be exact) set of english words that are chosen among the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary english poetry and are (hopefully) memorable.
+`mnemonic.js` uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable.
 
-To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x~i~` to the indexes `w~i~` of the words is the following (1:1 and reversible) function:
+To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x~i~` to the indices `w~i~` of the words is the following (1:1 and reversible) function:
 
-    w~i,1~ = x mod n
-    w~i,2~ = (x / n + w~i,1~) mod n
-    w~i,3~ = (x / n^2 + w~i,2~) mod n
+    w~i,1~ = x mod n,
+    w~i,2~ = (x / n + w~i,1~) mod n,
+    w~i,3~ = (x / n^2 + w~i,2~) mod n,
 
-where `n=1626` is the number of words. Repeating for each integer, gives you the sequence of words:
+where `n=1626` is the number of words. The sequence of words is then given by:
 
-    words = [ dict[w~i,1~], dict[w~i,2~], dict[w~i,3~] for each i ]
+    words = [ dict[w~i,1~], dict[w~i,2~], dict[w~i,3~] for each i ].
 
-As mentioned, you can also do the inverse, i.e. from the list of words calculate the random sequence that produced it. For each triplet of words `word~i,1~`, `word~i,2~`, `word~i,3~`, the integer that corresponds to the triplet is calculated as such:
+As mentioned, you can also do the reverse, i.e. from the list of words calculate the random sequence that produced it. For each triplet of words `word~i,1~`, `word~i,2~`, `word~i,3~`, the integer that corresponds to the triplet is calculated as such:
 
     w~i,1~ = dict.indexOf(word~i,1~)
     w~i,2~ = dict.indexOf(word~i,2~) mod n
@@ -36,7 +36,7 @@ As mentioned, you can also do the inverse, i.e. from the list of words calculate
 
 ## How do I use it?
 
-In code, to generate a 96-bit password, i.e. 9 words generated from 3 random 32-bit unsigned integers,
+Generate for example a 96-bit password, i.e. 9 words or 3 random 32-bit unsigned integers,
 
 ```javascript
 
@@ -46,7 +46,7 @@ In code, to generate a 96-bit password, i.e. 9 words generated from 3 random 32-
 
 ```
 
-If you wanna see the random sequence, or the the 96-bit number in hexadecimal notation (useful if you need a uid that you can actually remember),
+You can also obtain the random sequence, or the the 96-bit number in hexadecimal notation (useful if you need a uid that you can actually remember),
 
 ```javascript
 
@@ -70,7 +70,7 @@ If you wanna see the random sequence, or the the 96-bit number in hexadecimal no
 
  * *How does this compare to [diceware](http://world.std.com/~reinhold/diceware.html)?*
 
-    Diceware is very similal and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for mnemonic) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;)
+    Diceware is very similar and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for mnemonic.js) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;).
 
  * *Can I do this in my language?*
 
@@ -86,4 +86,4 @@ The idea behind `mnemonic.js` was blatantly stolen from the excellent [electrum]
 
 ## License
 
-`mnemonic.js` is Copyright (C) Yiorgis Gozadinos, Crypho AS. It is open-source and distributed under the MIT License.
+`mnemonic.js` is Copyright (C) Yiorgis Gozadinos, Crypho AS. It is distributed under the MIT License.
