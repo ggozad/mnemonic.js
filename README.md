@@ -12,6 +12,21 @@ Strong, secure passwords need to have an entropy of at least ~80 bits. Here are 
 
  * When you use non-random passwords your entropy/character reduces dramatically. For English, it's about 2 bits/character. You need a lot of characters to get there! And no, adding 1 at the end or using *1337* speak does not help much, dictionary attacks have been countering these techniques for a while now.
 
+## Mnemonic.js passwords
+
+`mnemonic.js` passwords consist of random sequences of words that are not so hard to remember. They have the advantage that you choose how strong you want them to be. Let's see some examples:
+
+For your casual gaming site you might want to create a 32-bit password. A random one from `mnemonic.js` is
+
+    confidence ourselves insult
+
+It's equivalent to the integer `652372173`, `26e268cd` in hex, or `JuJozQ==` in base64 encoding.
+
+For your passphrase you might want a stonger key. Here's a 96-bit example
+
+    mean yesterday gone size waist lace endless apple war
+
+corresponging to the integer `24224384090962230467342891306`, or `4e45f0dced5ec11c772ff92a` in hex, or `TkXw3O1ewRx3L/kq` in base64.
 
 ## I am sold. How does this work?
 
@@ -80,7 +95,7 @@ Finally, from a list of words it is possible to recreate the `Mnemonic` that gen
 
  * *How does this compare to [diceware](http://world.std.com/~reinhold/diceware.html)?*
 
-    Diceware is very similar and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for mnemonic.js) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;).
+    Diceware is very similar and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for `mnemonic.js`) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;).
 
  * *Can I do this in my language?*
 
