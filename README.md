@@ -1,6 +1,6 @@
 # mnemonic.js
 
-`mnemonic.js` creates random passphrases (or hexadecimal uids) of specified strength which you *can* actually remember.
+mnemonic.js creates random passphrases (or hexadecimal uids) of specified strength which you *can* actually remember.
 
 ## Huh? My passwords are fine.
 
@@ -14,9 +14,9 @@ Strong, secure passwords need to have an entropy of at least ~80 bits. Here are 
 
 ## Mnemonic.js passwords
 
-`mnemonic.js` passwords consist of random sequences of words that are not so hard to remember. They have the advantage that you choose how strong you want them to be. Let's see some examples:
+mnemonic.js passwords consist of random sequences of words that are not so hard to remember. They have the advantage that you choose how strong you want them to be. Let's see some examples:
 
-For your casual gaming site you might want to create a 32-bit password. A random one from `mnemonic.js` is
+For your casual gaming site you might want to create a 32-bit password. A random one from mnemonic.js is
 
     confidence ourselves insult
 
@@ -30,7 +30,7 @@ corresponging to the integer `24224384090962230467342891306`, or `4e45f0dced5ec1
 
 ## I am sold. How does this work?
 
-`mnemonic.js` uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable.
+mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable.
 
 To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x~i~` to the indices `w~i~` of the words is the following (1:1 and reversible) function:
 
@@ -95,7 +95,7 @@ Finally, from a list of words it is possible to recreate the `Mnemonic` that gen
 
  * *How does this compare to [diceware](http://world.std.com/~reinhold/diceware.html)?*
 
-    Diceware is very similar and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for `mnemonic.js`) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;).
+    Diceware is very similar and will of course also create secure memorable phrases. It has the advantage of requiring slightly less words (~12.9 bits/word as opposed to ~10.6 for mnemonic.js) and is also easier to work with without a computer. However, it has a longer list of words (7776) many of which I find impossible to remember ;).
 
  * *Can I do this in my language?*
 
@@ -103,12 +103,12 @@ Finally, from a list of words it is possible to recreate the `Mnemonic` that gen
 
 ## AMD loading
 
-`mnemonic.js` will register as an anonymous module if you use [requireJS](http://requirejs.org/).
+mnemonic.js will register as an anonymous module if you use [requireJS](http://requirejs.org/).
 
 ## Credits
 
-The idea behind `mnemonic.js` was blatantly stolen from the excellent [electrum](http://electrum.ecdsa.org/) bitcoin client.
+The idea behind mnemonic.js was blatantly stolen from the excellent [electrum](http://electrum.ecdsa.org/) bitcoin client.
 
 ## License
 
-`mnemonic.js` is Copyright (C) Yiorgis Gozadinos, Crypho AS. It is distributed under the MIT License.
+mnemonic.js is Copyright (C) Yiorgis Gozadinos, Crypho AS. It is distributed under the MIT License.
