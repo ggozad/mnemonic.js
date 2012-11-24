@@ -1,5 +1,7 @@
 body {
-	min-width: 557px;
+	width: 800px;
+	min-width: 800px;
+	min-height: 300px;
 	overflow-x:hidden;
 	margin: 0;
 	font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
