@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <title>Mnemonic password generator</title>
+    <script src="jquery.js"></script>
+    <script src="mnemonic.js"></script>
+    <script src="index.js"></script>
+
+    <meta name="author" content="Crypho" />
+    <link rel="stylesheet" type="text/css" href="mnemonic.css" />
+
+</head>
+<body>
+    <p id="header">Mnemonic passphrase generator
+        <span id="plug"><a href="http://www.crypho.com">from Crypho AS</a></span>
+        </p>
+        <div>
+            <label for="strength">Key strength</label>
+            <select id="strength">
+                <option value="32">32 bits</option>
+                <option value="64">64 bits</option>
+                <option value="96" selected="selected">96 bits</option>
+                <option value="128">128 bits</option>
+                <option value="160">160 bits</option>
+                <option value="192">192 bits</option>
+            </select>
+            <button class="btn" id="generate">Generate key</button>
+        </div>
+        <div>
+            <label for="words">Passphrase</label>
+            <ul id="words"></ul>
+        </div>
+        <div>
+            <label for="hex">Password</label>
+            <span id="hex"></span>
+        </div>
+</body>
+
+</html>
