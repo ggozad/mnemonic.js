@@ -10,7 +10,20 @@ function generate() {
     }
 }
 
+function clipboard(ev) {
+    var bg, cb;
+    bg = chrome.extension.getBackgroundPage();
+    cb = bg.document.getElementById("cb");
+    cb.style.display = "block";
+    cb.value = $(ev.target).text();
+    cb.select();
+    bg.document.execCommand("Copy");
+    cb.style.display = "none";
+}
+
+
 $(function () {
     $('#generate').on('click', generate);
+    $('#hex').on('click', clipboard);
     generate();
 });
