@@ -6,7 +6,7 @@ function generate() {
     words = m.toWords();
     $('#words').html('');
     for (;i < words.length; i++) {
-        $('#words').append($('<li>').text(words[i]));
+        $('#words').append($('<li>').text(words[i]+' '));
     }
 }
 

@@ -95,13 +95,6 @@ li {
 	padding: 0;
 	}
 
-ul li:after {
-		content: " ";
-		}
-
-ul li:last:after {
-		content: "";
-		}
 
 
 button {
