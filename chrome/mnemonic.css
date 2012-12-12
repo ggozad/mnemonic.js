@@ -12,7 +12,7 @@ body {
 }
 
 #header{
-	
+
 	border-bottom: 1px solid #ccc;
 	padding: 1em;
 	margin-top: 0;
@@ -40,7 +40,7 @@ label{
 	text-align: right;
 	padding-right: 1em;
 }
-	
+
 
 button, input, select, textarea {
 	margin: 0;
@@ -61,7 +61,7 @@ button, input, select, textarea {
 	 width: 120px;
 	 border: 1px solid #cccccc;
 	 background-color: #ffffff;
-	
+
 }
 
 #hex{
@@ -96,7 +96,7 @@ li {
 	}
 
 ul li:after {
-		content: ", ";
+		content: " ";
 		}
 
 ul li:last:after {
