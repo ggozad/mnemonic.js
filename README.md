@@ -32,22 +32,22 @@ corresponging to the integer `24224384090962230467342891306`, or `4e45f0dced5ec1
 
 mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable.
 
-To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x~i~` to the indices `w~i~` of the words is the following (1:1 and reversible) function:
+To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x[i]` to the indices `w[i, j]` of the words is the following (1:1 and reversible) function:
 
-    w~i,1~ = x mod n,
-    w~i,2~ = (x / n + w~i,1~) mod n,
-    w~i,3~ = (x / n^2 + w~i,2~) mod n,
+    w[i,1] = x mod n,
+    w[i,2] = (x / n + w[i,1]) mod n,
+    w[i,3] = (x / n^2 + w[i,2]) mod n,
 
 where `n=1626` is the number of words. The sequence of words is then given by:
 
-    words = [ dict[w~i,1~], dict[w~i,2~], dict[w~i,3~] for each i ].
+    words = [ dict[w[i,1]], dict[w[i,2]], dict[w[i,3]] for each i ].
 
-As mentioned, you can also do the reverse, i.e. from the list of words calculate the random sequence that produced it. For each triplet of words `word~i,1~`, `word~i,2~`, `word~i,3~`, the integer that corresponds to the triplet is calculated as such:
+As mentioned, you can also do the reverse, i.e. from the list of words calculate the random sequence that produced it. For each triplet of words `word[i,1]`, `word[i,2]`, `word[i,3]`, the integer that corresponds to the triplet is calculated as such:
 
-    w~i,1~ = dict.indexOf(word~i,1~)
-    w~i,2~ = dict.indexOf(word~i,2~) mod n
-    w~i,3~ = dict.indexOf(word~i,3~) mod n
-    x = w~i,1~ + n((w~i,2~ - w~i,1~) mod n) + n^2 ((w~i,3~ - w~i,2~) mod n)
+    w[i,1] = dict.indexOf(word[i,1])
+    w[i,2] = dict.indexOf(word[i,2])
+    w[i,3] = dict.indexOf(word[i,3])
+    x = w[i,1] + n((w[i,2] - w[i,1]) mod n) + n^2 ((w[i,3] - w[i,2]) mod n)
 
 ## How do I use it?
 
