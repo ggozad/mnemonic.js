@@ -26,8 +26,29 @@
             if (bits % 32 !== 0) {
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
-            this.random = new Uint32Array(bits/32);
-            crypto.getRandomValues(this.random); // Catch no entropy here.
+            
+            if (typeof window !== 'undefined') {
+                this.random = new Uint32Array(bits / 32);
+    
+                if (window.crypto && window.crypto.getRandomValues) {
+                    window.crypto.getRandomValues(this.random); // Catch no entropy here.
+                } else if (window.msCrypto && window.msCrypto.getRandomValues) {
+                    window.msCrypto.getRandomValues(this.random);
+                } else {
+                    throw 'Your browser can\'t securely generate random values.';
+                }
+            } else if (typeof require === 'function') {
+                this.random = require('crypto') 
+                    .randomBytes(bits / 8)
+                    .toString('hex')
+                    .match(/[\s\S]{1,8}/g) //http://stackoverflow.com/questions/6259515/javascript-elegant-way-to-split-string-into-segments-n-characters-long
+                    .map(function (intValue) {
+                        return parseInt(intValue, 16);
+                    });
+            } else {
+                throw 'Could not find a suitible way to generate random values';
+            }
+            
         } else {
             // Reconstruct from words
             i=0, n = Mnemonic.wc;
