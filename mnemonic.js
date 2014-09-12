@@ -1,4 +1,4 @@
-//    Mnemonic.js v. 1.0.0
+//    Mnemonic.js v. 1.0.1
 
 //    (c) 2012 Yiorgis Gozadinos, Crypho AS.
 //    Mnemonic.js is distributed under the MIT license.
@@ -17,6 +17,38 @@
     }
 }(this, function () {
 
+    /**
+     * create an array with random values
+     * @param bits
+     * @returns Array
+     */
+    var getRandom = function (bits) {
+        var random;
+
+        if (typeof window !== 'undefined') { //a browser
+            random = new Uint32Array(bits / 32);
+
+            if (window.crypto && window.crypto.getRandomValues) {
+                window.crypto.getRandomValues(random); // Catch no entropy here.
+            } else if (window.msCrypto && window.msCrypto.getRandomValues) {
+                window.msCrypto.getRandomValues(random);
+            } else {
+                throw 'Your browser can\'t securely generate random values. Please switch to a more modern browser.';
+            }
+        } else if (typeof require === 'function') { //node.js
+            random = require('crypto')
+                .randomBytes(bits / 8).toString('hex') //get random bytes as hex string
+                .match(/[\s\S]{1,8}/g) //split and parse as numbers
+                .map(function (intValue) {
+                    return parseInt(intValue, 16);
+                });
+        } else {
+            throw 'Could not find a suitable way to generate random values';
+        }
+
+        return random;
+    };
+
     var Mnemonic = function (args) {
         var bits, i, l, w1, w2, w3, n;
 
@@ -26,29 +58,8 @@
             if (bits % 32 !== 0) {
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
-            
-            if (typeof window !== 'undefined') {
-                this.random = new Uint32Array(bits / 32);
-    
-                if (window.crypto && window.crypto.getRandomValues) {
-                    window.crypto.getRandomValues(this.random); // Catch no entropy here.
-                } else if (window.msCrypto && window.msCrypto.getRandomValues) {
-                    window.msCrypto.getRandomValues(this.random);
-                } else {
-                    throw 'Your browser can\'t securely generate random values.';
-                }
-            } else if (typeof require === 'function') {
-                this.random = require('crypto') 
-                    .randomBytes(bits / 8)
-                    .toString('hex')
-                    .match(/[\s\S]{1,8}/g) //http://stackoverflow.com/questions/6259515/javascript-elegant-way-to-split-string-into-segments-n-characters-long
-                    .map(function (intValue) {
-                        return parseInt(intValue, 16);
-                    });
-            } else {
-                throw 'Could not find a suitible way to generate random values';
-            }
-            
+
+            this.random = getRandom(bits);
         } else {
             // Reconstruct from words
             i=0, n = Mnemonic.wc;
