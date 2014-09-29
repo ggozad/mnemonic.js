@@ -89,7 +89,7 @@ Finally, from a list of words it is possible to recreate the `Mnemonic` that gen
 
     At the moment only those which support the [crypto API](https://developer.mozilla.org/en-US/docs/DOM/window.crypto.getRandomValues), used for the random number generation. As of today (22/11/2012) those are Chrome and Safari, but Firefox is almost there. In the future I might include a good PRNG for the browsers that do not support `crypto`.
     
-    <br>Update 30/09/2014:
+    Update 30/09/2014:
     * IE11 is now also supported using the prefixed window.msCrypto api. 
     * Node.js is supported. 
 
