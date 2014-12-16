@@ -70,7 +70,7 @@
             this.random = getRandom(bits);
         } else {
             // Reconstruct from words
-            i = 0, n = Mnemonic.wc;
+            i = 0; n = Mnemonic.wc;
             l = args.length / 3;
             this.random = new Uint32Array(l);
             for (; i < l; i++) {
