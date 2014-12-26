@@ -18,6 +18,7 @@
         root.Mnemonic = factory();
     }
 }(this, function () {
+    'use strict';
 
     /**
      * create an array with random values
@@ -26,19 +27,19 @@
      */
     var getRandom;
 
-    function createGetRandom(getRandomValues) {
+    function createGetRandom(cryptoModuleName) {
         return function (bits) {
             var random = new Uint32Array(bits / 32);
-            getRandomValues(random);
+            window[cryptoModuleName].getRandomValues(random);
             return random;
         };
     }
 
     if (typeof window !== 'undefined') { //a browser
         if (window.crypto && window.crypto.getRandomValues) {
-            getRandom = createGetRandom(window.crypto.getRandomValues);
+            getRandom = createGetRandom('crypto');
         } else if (window.msCrypto && window.msCrypto.getRandomValues) {
-            getRandom = createGetRandom(window.msCrypto.getRandomValues);
+            getRandom = createGetRandom('msCrypto');
         } else {
             throw 'Your browser can\'t securely generate random values. Please switch to a more modern browser.';
         }
@@ -70,7 +71,7 @@
             this.random = getRandom(bits);
         } else {
             // Reconstruct from words
-            i = 0, n = Mnemonic.wc;
+            i = 0; n = Mnemonic.wc;
             l = args.length / 3;
             this.random = new Uint32Array(l);
             for (; i < l; i++) {
