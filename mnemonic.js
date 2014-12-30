@@ -1,4 +1,4 @@
-//    Mnemonic.js v. 1.0.1
+//    Mnemonic.js v. 1.0.2
 
 //    (c) 2012 Yiorgis Gozadinos, Crypho AS.
 //    Mnemonic.js is distributed under the MIT license.
@@ -19,42 +19,32 @@
     }
 }(this, function () {
 
-    /**
-     * create an array with random values
-     * @param bits
-     * @returns Array
-     */
-    var getRandom;
+    var _crypto;
 
-    function createGetRandom(getRandomValues) {
-        return function (bits) {
-            var random = new Uint32Array(bits / 32);
-            getRandomValues(random);
-            return random;
-        };
+    var getRandom = function (bits) {
+        var random = new Uint32Array(bits / 32);
+        window[_crypto].getRandomValues(random);
+        return random;
     }
 
     if (typeof window !== 'undefined') { //a browser
         if (window.crypto && window.crypto.getRandomValues) {
-            getRandom = createGetRandom(window.crypto.getRandomValues);
+            _crypto = 'crypto';
         } else if (window.msCrypto && window.msCrypto.getRandomValues) {
-            getRandom = createGetRandom(window.msCrypto.getRandomValues);
+            _crypto = 'msCrypto';
         } else {
-            throw 'Your browser can\'t securely generate random values. Please switch to a more modern browser.';
+            throw 'Your browser can\'t securely generate random values. Please switch to a modern browser.';
         }
-    } else if (typeof require === 'function') { //node.js
+    } else { //node.js
         var crypto = require('crypto');
         getRandom = function (bits) {
             var randomBytes = crypto.randomBytes(bits / 8),
                 random = [];
-
             for (var i = 0; i < (bits / 32); i++) {
                 random.push(randomBytes.readUInt32BE(4 * i));
             }
             return random;
         };
-    } else {
-        throw 'Could not find a suitable way to generate random values';
     }
 
     var Mnemonic = function (args) {
@@ -66,7 +56,6 @@
             if (bits % 32 !== 0) {
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
-
             this.random = getRandom(bits);
         } else {
             // Reconstruct from words
