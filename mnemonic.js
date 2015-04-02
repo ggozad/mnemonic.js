@@ -25,7 +25,7 @@
         var random = new Uint32Array(bits / 32);
         window[_crypto].getRandomValues(random);
         return random;
-    }
+    };
 
     if (typeof window !== 'undefined') { //a browser
         if (window.crypto && window.crypto.getRandomValues) {
@@ -84,6 +84,22 @@
         var i = 0, l = this.random.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
         for (; i < l; i++) {
             x = this.random[i];
+            w1 = x % n;
+            w2 = (((x / n) >> 0) + w1 ) % n;
+            w3 = (((((x / n) >> 0) / n ) >> 0) + w2 ) % n;
+            words.push(Mnemonic.words[w1]);
+            words.push(Mnemonic.words[w2]);
+            words.push(Mnemonic.words[w3]);
+        }
+        return words;
+    };
+
+    Mnemonic.prototype.seedToWords = function (seed) {
+        var seedParts = seed.match(/.{1,8}/g);
+
+        var i = 0, l = seedParts.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
+        for (; i < l; i++) {
+            x = parseInt(seedParts[i], 16);
             w1 = x % n;
             w2 = (((x / n) >> 0) + w1 ) % n;
             w3 = (((((x / n) >> 0) / n ) >> 0) + w2 ) % n;

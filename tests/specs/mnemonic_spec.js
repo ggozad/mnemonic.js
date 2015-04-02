@@ -51,6 +51,13 @@
             m2 = new Mnemonic(words);
             expect(m1.toHex()).toEqual(m2.toHex());
         });
+
+        it('words can be reconstructed from hex', function () {
+            var words, hex, m1 = new Mnemonic();
+            words = m1.toWords();
+            hex = m1.toHex();
+            expect(words).toEqual(m1.seedToWords(hex));
+        });
     });
 
 
