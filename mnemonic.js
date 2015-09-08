@@ -1,6 +1,6 @@
-//    Mnemonic.js v. 1.0.2
+//    Mnemonic.js v. 1.1.0
 
-//    (c) 2012 Yiorgis Gozadinos, Crypho AS.
+//    (c) 2012-2015 Yiorgis Gozadinos, Crypho AS.
 //    Mnemonic.js is distributed under the MIT license.
 //    http://github.com/ggozad/mnemonic.js
 
@@ -25,7 +25,7 @@
         var random = new Uint32Array(bits / 32);
         window[_crypto].getRandomValues(random);
         return random;
-    }
+    };
 
     if (typeof window !== 'undefined') { //a browser
         if (window.crypto && window.crypto.getRandomValues) {
@@ -56,34 +56,25 @@
             if (bits % 32 !== 0) {
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
-            this.random = getRandom(bits);
-        } else {
-            // Reconstruct from words
-            i = 0; n = Mnemonic.wc;
-            l = args.length / 3;
-            this.random = new Uint32Array(l);
-            for (; i < l; i++) {
-                w1 = Mnemonic.words.indexOf(args[3 * i]);
-                w2 = Mnemonic.words.indexOf(args[3 * i + 1]);
-                w3 = Mnemonic.words.indexOf(args[3 * i + 2]);
-                this.random[i] = w1 + n * Mnemonic._mod(w2 - w1, n) + n * n * Mnemonic._mod(w3 - w2, n);
-            }
+            this.seed = getRandom(bits);
+        } else if (args instanceof Uint32Array) {
+            this.seed = args;
         }
         return this;
     };
 
     Mnemonic.prototype.toHex = function () {
-        var l = this.random.length, res = '', i = 0;
+        var l = this.seed.length, res = '', i = 0;
         for (; i < l; i++) {
-            res += ('00000000' + this.random[i].toString(16)).substr(-8);
+            res += ('00000000' + this.seed[i].toString(16)).substr(-8);
         }
         return res;
     };
 
     Mnemonic.prototype.toWords = function () {
-        var i = 0, l = this.random.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
+        var i = 0, l = this.seed.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
         for (; i < l; i++) {
-            x = this.random[i];
+            x = this.seed[i];
             w1 = x % n;
             w2 = (((x / n) >> 0) + w1 ) % n;
             w3 = (((((x / n) >> 0) / n ) >> 0) + w2 ) % n;
@@ -92,6 +83,36 @@
             words.push(Mnemonic.words[w3]);
         }
         return words;
+    };
+
+    Mnemonic.fromWords = function (words) {
+        var i = 0, n = Mnemonic.wc,
+            l = words.length / 3,
+            seed = new Uint32Array(l),
+            w1, w2, w3;
+
+        for (; i < l; i++) {
+            w1 = Mnemonic.words.indexOf(words[3 * i]);
+            w2 = Mnemonic.words.indexOf(words[3 * i + 1]);
+            w3 = Mnemonic.words.indexOf(words[3 * i + 2]);
+            seed[i] = w1 + n * Mnemonic._mod(w2 - w1, n) + n * n * Mnemonic._mod(w3 - w2, n);
+        }
+
+        return new Mnemonic(seed);
+    };
+
+    Mnemonic.fromHex = function (hex) {
+        var hexParts = hex.match(/.{1,8}/g),
+            i = 0, n = Mnemonic.wc,
+            l = hex.length / 8,
+            seed = new Uint32Array(l),
+            x, w1, w2, w3;
+
+        for (; i < l; i++) {
+            x = parseInt(hexParts[i], 16);
+            seed[i] = x;
+        }
+        return new Mnemonic(seed);
     };
 
     Mnemonic.wc = 1626;
