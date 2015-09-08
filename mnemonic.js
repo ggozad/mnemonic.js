@@ -56,25 +56,25 @@
             if (bits % 32 !== 0) {
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
-            this.random = getRandom(bits);
+            this.seed = getRandom(bits);
         } else if (args instanceof Uint32Array) {
-            this.random = args;
+            this.seed = args;
         }
         return this;
     };
 
     Mnemonic.prototype.toHex = function () {
-        var l = this.random.length, res = '', i = 0;
+        var l = this.seed.length, res = '', i = 0;
         for (; i < l; i++) {
-            res += ('00000000' + this.random[i].toString(16)).substr(-8);
+            res += ('00000000' + this.seed[i].toString(16)).substr(-8);
         }
         return res;
     };
 
     Mnemonic.prototype.toWords = function () {
-        var i = 0, l = this.random.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
+        var i = 0, l = this.seed.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
         for (; i < l; i++) {
-            x = this.random[i];
+            x = this.seed[i];
             w1 = x % n;
             w2 = (((x / n) >> 0) + w1 ) % n;
             w3 = (((((x / n) >> 0) / n ) >> 0) + w2 ) % n;
