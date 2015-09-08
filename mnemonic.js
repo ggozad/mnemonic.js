@@ -57,17 +57,8 @@
                 throw 'Can only generate 32/64/96/128 bit passwords';
             }
             this.random = getRandom(bits);
-        } else {
-            // Reconstruct from words
-            i = 0; n = Mnemonic.wc;
-            l = args.length / 3;
-            this.random = new Uint32Array(l);
-            for (; i < l; i++) {
-                w1 = Mnemonic.words.indexOf(args[3 * i]);
-                w2 = Mnemonic.words.indexOf(args[3 * i + 1]);
-                w3 = Mnemonic.words.indexOf(args[3 * i + 2]);
-                this.random[i] = w1 + n * Mnemonic._mod(w2 - w1, n) + n * n * Mnemonic._mod(w3 - w2, n);
-            }
+        } else if (args instanceof Uint32Array) {
+            this.random = args;
         }
         return this;
     };
@@ -92,6 +83,22 @@
             words.push(Mnemonic.words[w3]);
         }
         return words;
+    };
+
+    Mnemonic.fromWords = function (words) {
+        var i = 0, n = Mnemonic.wc,
+            l = words.length / 3,
+            seed = new Uint32Array(l),
+            w1, w2, w3;
+
+        for (; i < l; i++) {
+            w1 = Mnemonic.words.indexOf(words[3 * i]);
+            w2 = Mnemonic.words.indexOf(words[3 * i + 1]);
+            w3 = Mnemonic.words.indexOf(words[3 * i + 2]);
+            seed[i] = w1 + n * Mnemonic._mod(w2 - w1, n) + n * n * Mnemonic._mod(w3 - w2, n);
+        }
+
+        return new Mnemonic(seed);
     };
 
     Mnemonic.prototype.seedToWords = function (seed) {

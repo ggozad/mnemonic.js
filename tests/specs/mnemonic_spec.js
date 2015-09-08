@@ -45,10 +45,16 @@
             expect(m.toHex()).toEqual('ffffffff');
         });
 
+        it('can be constructed from a Uint32 array', function () {
+            var arr, m2, m1 = new Mnemonic();
+            arr = m1.random;
+            m2 = new Mnemonic(arr);
+            expect(m1.toHex()).toEqual(m2.toHex());
+        });
+
         it('can be reconstructed from words', function () {
-            var words, m2, m1 = new Mnemonic();
-            words = m1.toWords();
-            m2 = new Mnemonic(words);
+            var m2, m1 = new Mnemonic();
+            m2 = Mnemonic.fromWords(m1.toWords());
             expect(m1.toHex()).toEqual(m2.toHex());
         });
 
