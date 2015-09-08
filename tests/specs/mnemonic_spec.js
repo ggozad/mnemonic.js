@@ -49,20 +49,19 @@
             var arr, m2, m1 = new Mnemonic();
             arr = m1.random;
             m2 = new Mnemonic(arr);
-            expect(m1.toHex()).toEqual(m2.toHex());
+            expect(m1.random).toEqual(m2.random);
         });
 
         it('can be reconstructed from words', function () {
             var m2, m1 = new Mnemonic();
             m2 = Mnemonic.fromWords(m1.toWords());
-            expect(m1.toHex()).toEqual(m2.toHex());
+            expect(m1.random).toEqual(m2.random);
         });
 
-        it('words can be reconstructed from hex', function () {
-            var words, hex, m1 = new Mnemonic();
-            words = m1.toWords();
-            hex = m1.toHex();
-            expect(words).toEqual(m1.seedToWords(hex));
+        it('can be reconstructed from hex', function () {
+            var m2, m1 = new Mnemonic();
+            m2 = Mnemonic.fromHex(m1.toHex());
+            expect(m1.random).toEqual(m2.random);
         });
     });
 

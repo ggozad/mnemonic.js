@@ -101,20 +101,18 @@
         return new Mnemonic(seed);
     };
 
-    Mnemonic.prototype.seedToWords = function (seed) {
-        var seedParts = seed.match(/.{1,8}/g);
+    Mnemonic.fromHex = function (hex) {
+        var hexParts = hex.match(/.{1,8}/g),
+            i = 0, n = Mnemonic.wc,
+            l = hex.length / 8,
+            seed = new Uint32Array(l),
+            x, w1, w2, w3;
 
-        var i = 0, l = seedParts.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
         for (; i < l; i++) {
-            x = parseInt(seedParts[i], 16);
-            w1 = x % n;
-            w2 = (((x / n) >> 0) + w1 ) % n;
-            w3 = (((((x / n) >> 0) / n ) >> 0) + w2 ) % n;
-            words.push(Mnemonic.words[w1]);
-            words.push(Mnemonic.words[w2]);
-            words.push(Mnemonic.words[w3]);
+            x = parseInt(hexParts[i], 16);
+            seed[i] = x;
         }
-        return words;
+        return new Mnemonic(seed);
     };
 
     Mnemonic.wc = 1626;
