@@ -32,8 +32,6 @@
             _crypto = 'crypto';
         } else if (window.msCrypto && window.msCrypto.getRandomValues) {
             _crypto = 'msCrypto';
-        } else {
-            throw 'Your browser can\'t securely generate random values. Please switch to a modern browser.';
         }
     } else { //node.js
         var crypto = require('crypto');
