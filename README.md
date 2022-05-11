@@ -30,7 +30,7 @@ corresponging to the integer `24224384090962230467342891306`, or `4e45f0dced5ec1
 
 ## I am sold. How does this work?
 
-mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable. An alternative set of English words has been added called `bitcoinSubset`. This list is a subset of the words used by crypto wallet passphrase generators.
+mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable. An alternative set of English words has been added called `bitcoinSubset`. This list is a subset of the words used by crypto wallet passphrase generators. Currently you can view some at [Bitcoin mnenomic code tools](https://bitaps.com/mnemonic).
 
 To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x[i]` to the indices `w[i, j]` of the words is the following (1:1 and reversible) function:
 
