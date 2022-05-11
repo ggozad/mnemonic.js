@@ -30,7 +30,7 @@ corresponging to the integer `24224384090962230467342891306`, or `4e45f0dced5ec1
 
 ## I am sold. How does this work?
 
-mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable.
+mnemonic.js uses a relatively small (1626 to be exact) set of English words that are chosen from the [list](http://en.wiktionary.org/wiki/Wiktionary:Frequency_lists/Contemporary_poetry) of frequently used words in contemporary English poetry and are (hopefully) memorable. An alternative set of English words has been added called `bitcoinSubset`. This list is a subset of the words used by crypto wallet passphrase generators.
 
 To generate a passphrase, a random sequence of 32-bit unsigned integers is generated. The bigger the length of the sequence the stronger it is, for example 4 integers will give you 128-bit strong password. This sequence is then transformed to a list of words from the dictionary, 3 words per integer. The function that transforms the integer `x[i]` to the indices `w[i, j]` of the words is the following (1:1 and reversible) function:
 
@@ -61,6 +61,16 @@ Generate for example a 96-bit password, i.e. 9 words or 3 random 32-bit unsigned
 
 ```
 
+To use an alternate list:
+
+```javascript
+
+    m = new Mnemonic(96, 'bitcoinSubset');
+    m.toWords();
+    ["grey", "climb", "demon", "snap", "shove", "fruit", "grasp", "hum", "self"]
+
+```
+
 You can also obtain the random sequence, or the the 96-bit number in hexadecimal notation (useful if you need a uid that you can actually remember),
 
 ```javascript
@@ -83,6 +93,20 @@ Finally, from a list of words or a hex string it is possible to recreate the `Mn
 
     m = Mnemonic.fromHex("0a6deb990a3db22d6ed3010b")
     m.toWords()
+    ["grey", "climb", "demon", "snap", "shove", "fruit", "grasp", "hum", "self"]
+
+```
+
+Of course, if you generated using an alternate word list, you will need to specify that:
+
+```javascript
+
+    m = Mnemonic.fromWords(["grey", "climb", "demon", "snap", "shove", "fruit", "grasp", "hum", "self"], 'bitcoinSubset');
+    m.toHex();
+    "0a6deb990a3db22d6ed3010b"
+
+    m = Mnemonic.fromHex("0a6deb990a3db22d6ed3010b")
+    m.toWords('bitcoinSubset')
     ["grey", "climb", "demon", "snap", "shove", "fruit", "grasp", "hum", "self"]
 
 ```
