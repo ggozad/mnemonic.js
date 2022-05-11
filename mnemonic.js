@@ -69,7 +69,7 @@
         return res;
     };
 
-    Mnemonic.prototype.toWords = function (wordlist ="poetry") {
+    Mnemonic.prototype.toWords = function (wordlist = "poetry") {
         var i = 0, l = this.seed.length, n = Mnemonic.wc, words = [], x, w1, w2, w3;
         for (; i < l; i++) {
             x = this.seed[i];
@@ -83,7 +83,7 @@
         return words;
     };
 
-    Mnemonic.fromWords = function (words, wordlist ="poetry") {
+    Mnemonic.fromWords = function (words, wordlist = "poetry") {
         var i = 0, n = Mnemonic.wc,
             l = words.length / 3,
             seed = new Uint32Array(l),
