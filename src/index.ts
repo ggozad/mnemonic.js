@@ -30,7 +30,7 @@ export function toWords(bytes: Uint8Array): string {
   return out.join(' ');
 }
 
-export function parse(phrase: string): Uint8Array {
+export function parse(phrase: string): Uint8Array<ArrayBuffer> {
   const tokens = phrase.toLowerCase().split(/\s+/).filter(Boolean);
   if (tokens.length === 0 || tokens.length % 3 !== 0) {
     throw new Error(`phrase must have a positive multiple of 3 words, got ${tokens.length}`);

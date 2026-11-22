@@ -41,6 +41,13 @@ test('parse normalises case and whitespace', () => {
   assert.equal(toHex(parse('  Fail\tHUSBAND \n howl ')), 'ffffffff');
 });
 
+test('parse output is accepted by WebCrypto', async () => {
+  const key = await crypto.subtle.importKey('raw', parse('fail husband howl'), 'HKDF', false, [
+    'deriveBits',
+  ]);
+  assert.equal(key.type, 'secret');
+});
+
 test('parse refuses an unknown word and names it', () => {
   assert.throws(() => parse('fail husbandd howl'), /"husbandd"/);
 });
