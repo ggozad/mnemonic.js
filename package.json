@@ -4,7 +4,10 @@
   "description": "Memorable random phrases of known strength",
   "license": "MIT",
   "author": "Yiorgis Gozadinos",
-  "repository": "github:ggozad/mnemonic.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ggozad/mnemonic.js.git"
+  },
   "type": "module",
   "exports": {
     ".": {
